@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.myquizapp.R
 import java.lang.reflect.Type
@@ -60,6 +61,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setQuestion() {
+        defaultOptionsView()
 
         val question: Question = mQuestionList!![mCurrentPosition - 1]
         ivImage?.setImageResource(question.image)
@@ -151,6 +153,9 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                         mCurrentPosition <= mQuestionList!!.size -> {
                             setQuestion()
                         }
+                        else -> {
+                            Toast.makeText(this,"You made it to the end",Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }else{
                     val question = mQuestionList?.get(mCurrentPosition -1)
@@ -158,6 +163,14 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                         answerView(mSelectedOptionPosition, R.drawable.wrong_option_border_bg )
                     }
                     answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
+
+                    if(mCurrentPosition == mQuestionList!!.size){
+                        btnSubmit?.text="FINISH"
+                    }else{
+                        btnSubmit?.text="GO TO NEXT QUESTION"
+                    }
+
+                    mSelectedOptionPosition = 0
                 }
             }
         }
